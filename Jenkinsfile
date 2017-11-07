@@ -1,27 +1,28 @@
 pipeline {
     agent any
-    stage('build Success'){
+    stages {
+        stage('build Success'){
+            steps {
 
-         env.NODE_ENV = "test"
+             echo "will succeed"
 
-         echo "will succeed"
-         print "Environment will be : ${env.NODE_ENV}"
+             sh 'node app'
+             sh 'mocha test/success.js'
+            }
 
-         sh 'node -v'
-         sh 'npm install'
-         sh 'node app'
-         sh 'mocha test/success.js'
 
-       }
+           }
 
-       stage('build Failure'){
+        stage('build Failure'){
+            steps {
+             echo "will fail"
 
-         echo "will fail"
+             sh 'node -v'
+             sh 'npm install'
+             sh 'node app'
+             sh 'mocha test/error.js'
+            }
 
-         sh 'node -v'
-         sh 'npm install'
-         sh 'node app'
-         sh 'mocha test/error.js'
-
-       }
+         }
+    }
 }
