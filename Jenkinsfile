@@ -1,12 +1,6 @@
-node('node') {
-
-
-    currentBuild.result = "SUCCESS"
-
-    try {
-
-
-       stage('build Success'){
+pipeline {
+    agent any
+    stage('build Success'){
 
          env.NODE_ENV = "test"
 
@@ -30,16 +24,4 @@ node('node') {
          sh 'mocha test/error.js'
 
        }
-
-
-    }
-    catch (err) {
-
-        currentBuild.result = "FAILURE"
-
-        echo "Failed!"
-
-        throw err
-    }
-
 }
